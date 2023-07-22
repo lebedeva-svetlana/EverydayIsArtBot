@@ -1,10 +1,10 @@
 ﻿# EverydayIsArt
 
-...................bot for Telegram.
+Telegram bot that sends out random museum exhibits.
 
 ## Usage
 
-...................
+Use /get command.
 
 ## Credits
 

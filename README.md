@@ -1,6 +1,6 @@
 ﻿# EverydayIsArt
 
-Telegram bot that sends out random museum exhibits. All descriptions are in russian.
+Telegram bot that sends out random museum exhibits.
 
 ## Usage
 
@@ -12,8 +12,9 @@ Use /get command.
 
 - The State Tretyakov Gallery
 
-Work in progress.
-
 ## Credits
 
-Third-party libraries: [telegraf](https://github.com/influxdata/telegraf) licensed with MIT; [cheerio](https://github.com/cheeriojs/cheerio) licensed with MIT.
+Third-party libraries:
+
+- [Telegraf](https://github.com/influxdata/telegraf) licensed with MIT.
+- [Cheerio](https://github.com/cheeriojs/cheerio) licensed with MIT.

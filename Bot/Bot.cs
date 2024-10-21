@@ -33,32 +33,17 @@ namespace EverydayIsArtBot.Bot
             string caption = GetMessage(art);
 
             string? channelName = _configHelper.GetConfigString("ChannelName");
-            await bot.SendPhotoAsync(new ChatId(channelName), image, caption: caption, parseMode: ParseMode.Html);
+            try
+            {
+                await bot.SendPhotoAsync(new ChatId(channelName), image, caption: caption, parseMode: ParseMode.Html);
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "An error occurred on post sending.");
+            }
         }
 
-        private static string GetStringFomArray(string[] arr, bool needBegin = false, bool needEnd = false)
-        {
-            string nl = "\n";
-            string str = "";
-            if (needBegin)
-            {
-                str += nl;
-            }
-
-            foreach (string a in arr)
-            {
-                str += $"{nl}{a}";
-            }
-
-            if (needEnd)
-            {
-                str += nl;
-            }
-
-            return str;
-        }
-
-        private string GetMessage(Art art)
+        private static string GetMessage(Art art)
         {
             string nl = "\n";
             string message = $"<b>{art.Title}</b>";
@@ -70,32 +55,27 @@ namespace EverydayIsArtBot.Bot
 
             if (art.Author is not null)
             {
-                message += GetStringFomArray(art.Author, true, true);
+                message += $"{nl}{nl}{GetStringFromArray(art.Author)}";
             }
 
             if (art.PlaceOfOrigin is not null)
             {
-                message += GetStringFomArray(art.PlaceOfOrigin, true, true);
+                message += $"{nl}{nl}{GetStringFromArray(art.PlaceOfOrigin)}";
             }
 
             if (art.Medium is not null)
             {
-                message += GetStringFomArray(art.Medium, true, true);
+                message += $"{nl}{nl}{GetStringFromArray(art.Medium)}";
             }
 
             if (art.AccessNumber is not null)
             {
-                if (message[^2..] != nl)
-                {
-                    message += nl;
-                }
-
-                message += $"{nl}{art.AccessNumber}";
+                message += $"{nl}{nl}{art.AccessNumber}";
             }
 
             if (art.WayToGet is not null)
             {
-                message += GetStringFomArray(art.WayToGet);
+                message += $"{nl}{GetStringFromArray(art.WayToGet)}";
             }
 
             if (message[^2..] != nl)
@@ -107,6 +87,11 @@ namespace EverydayIsArtBot.Bot
             message = message.Replace($"{nl}{nl}{nl}", $"{nl}{nl}");
 
             return message;
+        }
+
+        private static string GetStringFromArray(string[] arr)
+        {
+            return string.Join("\n", arr);
         }
 
         private async Task<Art?> GetArt()

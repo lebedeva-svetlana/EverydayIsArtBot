@@ -30,6 +30,13 @@ Bot bot = new(helper);
 
 while (true)
 {
-    await bot.Send();
+    try
+    {
+        await bot.Send();
+    }
+    catch (Exception ex)
+    {
+        Log.Logger.Error(ex, "An error occurred on post sending.");
+    }
     Thread.Sleep(freqMinutes * 1000 * 60);
 }
